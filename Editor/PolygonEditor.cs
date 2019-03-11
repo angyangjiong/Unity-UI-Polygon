@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 //https://bitbucket.org/Unity-Technologies/ui/src/0651862509331da4e85f519de88c99d0529493a5/UnityEditor.UI/UI/ImageEditor.cs
@@ -88,9 +87,8 @@ namespace UnityEditor.UI.Extensions
 
         //https://bitbucket.org/Unity-Technologies/ui/src/0651862509331da4e85f519de88c99d0529493a5/UnityEditor.UI/UI/RawImageEditor.cs
 
-        private static readonly Rect uvRect = new Rect(0f, 0f, 1f, 1f);
-
         public override bool HasPreviewGUI() { return true; }
+        private static readonly Rect uvRect = new Rect(0f, 0f, 1f, 1f);
 
         private static Rect Outer(Polygon polygon)
         {
@@ -114,8 +112,8 @@ namespace UnityEditor.UI.Extensions
 
             var outer = Outer(polygon);
 
+            //https://bitbucket.org/Unity-Technologies/ui/src/0651862509331da4e85f519de88c99d0529493a5/UnityEditor.UI/UI/SpriteDrawUtility.cs
             Type spriteDrawUtilityType = Assembly.Load("UnityEditor.UI").GetType("UnityEditor.UI.SpriteDrawUtility");
-            
             //void DrawSprite(Texture tex, Rect drawArea, Vector4 padding, Rect outer, Rect inner, Rect uv, Color color, Material mat)
             MethodInfo mathodInfo = spriteDrawUtilityType.GetMethod("DrawSprite", BindingFlags.NonPublic | BindingFlags.Static);
             mathodInfo.Invoke(null, new object[] { tex , rect, Vector4.zero, outer, outer, uvRect, polygon.canvasRenderer.GetColor(), null });
